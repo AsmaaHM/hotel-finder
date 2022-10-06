@@ -41,14 +41,14 @@ namespace HotelFinder.Controllers
         [HttpPost]
         public async Task<ActionResult<Booking>> Post(AddBookingInput input)
         {
-            var bookingId = 0; 
+            var booking = new Booking(); 
             try
             {
-                bookingId = await _bookingRepo.Insert(new Booking() { HotelId = input.HotelId, Nights = input.Nights, CheckInDate = input.CheckInDate, CheckOutDate = input.CheckOutDate, UserId = input.UserId, TotalPrice = input.TotalPrice});
+                booking = await _bookingRepo.Insert(new Booking() { HotelId = input.HotelId, Nights = input.Nights, CheckInDate = input.CheckInDate, CheckOutDate = input.CheckOutDate, UserId = input.UserId, TotalPrice = input.TotalPrice});
             }
             catch (DbUpdateException)
             {
-                if (await _bookingRepo.Exists(bookingId))
+                if (await _bookingRepo.Exists(booking.Id))
                 {
                     return Conflict();
                 }
@@ -58,7 +58,7 @@ namespace HotelFinder.Controllers
                 }
             }
 
-            return CreatedAtAction("Get", new { id = bookingId }, bookingId);
+            return CreatedAtAction("Get", new { id = booking.Id }, booking);
         }
 
         #endregion

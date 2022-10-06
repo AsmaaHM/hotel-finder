@@ -24,11 +24,11 @@ namespace HotelFinder.Backend
         {
             return await entities.ToListAsync();
         }
-        public async Task<T> Get(long id)
+        public async Task<T> Get(int id)
         {
             return await entities.SingleOrDefaultAsync(s => s.Id == id);
         }
-        public async Task<int> Insert(T entity)
+        public async Task<T> Insert(T entity)
         {
             if (entity == null)
             {
@@ -36,7 +36,7 @@ namespace HotelFinder.Backend
             }
             await entities.AddAsync(entity);
             await context.SaveChangesAsync();
-            return entity.Id;
+            return entity;
         }
         public async Task Update(T entity)
         {

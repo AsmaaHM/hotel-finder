@@ -9,8 +9,8 @@ namespace HotelFinder.Backend
     public interface IRepository<T> where T : BaseEntity
     {
         Task<IEnumerable<T>> GetAll();
-        Task<T> Get(long id);
-        Task<int> Insert(T entity);
+        Task<T> Get(int id);
+        Task<T> Insert(T entity);
         Task Update(T entity);
         Task Delete(T entity);
         Task<bool> Exists(int id);
